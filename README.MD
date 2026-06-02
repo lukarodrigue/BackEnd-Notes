@@ -19,7 +19,7 @@ Backend da aplicação Rocket Notes, desenvolvida durante a trilha Explorer da R
 - Node.js
 - Express
 - Knex.js
-- SQLite
+- Better-sqlite3
 - JWT (jsonwebtoken)
 - Bcrypt
 - Multer

@@ -1,18 +1,16 @@
-const sqlite3 = require('sqlite3');
-const sqlite = require('sqlite');
 const path = require('path');
+const Database = require('better-sqlite3');
 
-async function sqliteConnection() {
-  const database = await sqlite.open({
-    filename: path.resolve(path.resolve(
-      __dirname,
-      '..',
-      'database.db'
-    )),
-    driver: sqlite3.Database
-  });
+function sqliteConnection() {
+  const db = new Database(path.resolve(__dirname, '..', 'database.db'));
 
-  return database;
+  const connection = {
+    get: async (sql, params = []) => db.prepare(sql).get(...(Array.isArray(params) ? params : [params])),
+    run: async (sql, params = []) => db.prepare(sql).run(...(Array.isArray(params) ? params : [params])),
+    exec: async (sql) => db.exec(sql),
+  };
+
+  return Promise.resolve(connection);
 }
 
 module.exports = sqliteConnection;
